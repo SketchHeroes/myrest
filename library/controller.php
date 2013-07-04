@@ -25,7 +25,15 @@ abstract class Controller {
          
           //$this->model = new $model_classname();  
           //$this->view = new $view_classname(); 
-     }   
+     }  
+     
+     // dealing with unsupported HTTP request methods
+     public function __call($name, $params) {
+       //error_log('Unknown HTTP method ' . $name );
+       echo 'Unknown HTTP request method'.LINE_BREAK;
+       return false;
+     }
+
      /*
      public function invoke()  
      {  

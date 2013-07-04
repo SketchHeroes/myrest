@@ -14,21 +14,34 @@ class RegisterController extends Controller {
    
     public function GETAction($request)
     {
-        
+        // for testing
+        echo "GET registering user".LINE_BREAK;
+        var_dump($request->parameters);
+        //$this->model = 
     }
 
     public function POSTAction($request)
     {
-        echo "registering user".LINE_BREAK;
+       
+        echo "POST registering user".LINE_BREAK;
+        var_dump($request->parameters);
         //$this->model = 
     }
     
-    public function PUTAction($request) {
-   
+    public function PUTAction($request) 
+    {
+        // for testing
+        echo "PUT registering user".LINE_BREAK;
+        var_dump($request->parameters);
+        //$this->model = 
     }
 
-    public function DELETEAction($request) {
-
+    public function DELETEAction($request) 
+    {
+        // for testing
+        echo "DELETE registering user".LINE_BREAK;
+        var_dump($request->parameters);
+        //$this->model = 
     }
 
 }

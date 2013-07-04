@@ -6,7 +6,7 @@ define('LINE_BREAK', '<br />');
 
 require_once (ROOT . DS . 'library' . DS . 'bootstrap.php');
 
-
+// creating Request object
 try {
     $request = new Request();
     $request->url_elements = array();
@@ -16,6 +16,7 @@ catch(Exception $e){
     exit;
 }
 
+// reading the url elements into the Request object
 if(isset($_SERVER['PATH_INFO'])) {
   $request->url_elements = explode('/', $_SERVER['PATH_INFO']);
   //var_dump($request->url_elements);
@@ -28,6 +29,7 @@ $request->method = $_SERVER['REQUEST_METHOD'];
 switch($request->method) {
   case 'GET':
     $request->parameters = $_GET;
+    var_dump($request->parameters);
     break;
   case 'POST':
   case 'PUT':
