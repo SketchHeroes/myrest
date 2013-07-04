@@ -6,11 +6,11 @@
  */
 
 /**
- * Description of registercontroller
+ * Description of defaultcontroller
  *
  * @author michael
  */
-class RegisterController extends Controller {
+class DefaultController extends Controller {
    
     public function GETAction($request)
     {
@@ -19,8 +19,7 @@ class RegisterController extends Controller {
 
     public function POSTAction($request)
     {
-        echo "registering user".LINE_BREAK;
-        //$this->model = 
+ 
     }
     
     public function PUTAction($request) {

@@ -6,17 +6,15 @@ define('LINE_BREAK', '<br />');
 
 require_once (ROOT . DS . 'library' . DS . 'bootstrap.php');
 
-// initialise the request object and store the requested URL
+
 try {
     $request = new Request();
     $request->url_elements = array();
 } 
 catch(Exception $e){
-    echo $e->getMessage(), "\n";
+    echo $e->getMessage(),LINE_BREAK;
+    exit;
 }
-
-
-//echo $_SERVER['REQUEST_METHOD'].LINE_BREAK;
 
 if(isset($_SERVER['PATH_INFO'])) {
   $request->url_elements = explode('/', $_SERVER['PATH_INFO']);
@@ -42,24 +40,21 @@ switch($request->method) {
     $request->parameters = array();
 }
 
-//var_dump($request->parameters);
-//echo LINE_BREAK;
-
-// route the request
-if($request->url_elements) {
-  $controller_name = ucfirst($request->url_elements[1]) . 'Controller';
-  try {
-    $controller = new $controller_name();
-    $action_name = ucfirst($request->method) . "Action";
-    $response = $controller->$action_name($request);
-  } catch(Exception $e) {
-    $response = "Unknown Request for " . $request->url_elements[1];
+ //var_dump($request->parameters);
+        //echo LINE_BREAK;
+try{
+    $controller_router = new ControllerRouter();
+    $controller_router->route($request);
+    exit;
+}
+catch(Exception $e){
     echo $e->getMessage(),LINE_BREAK;
-  }
 }
-else {
-  $response = "Unknown Request";
-}
+
+
+
+
+
+
 
 //echo json_encode($response).LINE_BREAK;
-

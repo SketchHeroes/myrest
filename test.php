@@ -1,5 +1,5 @@
 
-<form name="input" action="index.php" method="post">
+<form name="input" action="register" method="post">
 Username: <input type="text" name="user" value="Mishka"><br />
 Password: <input type="text" name="pass" value="Chekin"><br />
 Repeat Password: <input type="text" name="pass2"  value="Chekin2"><br />
