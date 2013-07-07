@@ -28,7 +28,7 @@ class ControllerRouter {
           // contruct the controller and route the request to the appropriate 
           // method
           $controller = new $controller_name();
-          $action_name = ucfirst($request->method) . "Action";
+          $action_name = ucfirst($request->getMethod()) . "Action";
           $response = $controller->$action_name($request);
         } 
         catch(Exception $e) {

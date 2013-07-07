@@ -24,9 +24,9 @@ if(isset($_SERVER['PATH_INFO'])) {
 
 // figure out the method 
 // and if it's POST(or PUT) grab the incoming data
-$request->method = $_SERVER['REQUEST_METHOD'];
+$request->setMethod( $_SERVER['REQUEST_METHOD'] );
 
-switch($request->method) {
+switch($request->getMethod()) {
   case 'GET':
     $request->parameters = $_GET;
     var_dump($request->parameters);
