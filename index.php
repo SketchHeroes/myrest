@@ -23,7 +23,6 @@ if(isset($_SERVER['PATH_INFO'])) {
   var_dump($request->url_elements);
 }
 */
-
 // figure out the method 
 // and if it's POST(or PUT) grab the incoming data
 $request->setMethod( $_SERVER['REQUEST_METHOD'] );
