@@ -16,7 +16,7 @@ class RegisterController extends Controller {
     {
         // for testing
         echo "GET registering user".LINE_BREAK;
-        var_dump($request->parameters);
+        var_dump($request->getRequestVars());
         //$this->model = 
     }
 
@@ -24,7 +24,7 @@ class RegisterController extends Controller {
     {
        
         echo "POST registering user".LINE_BREAK;
-        var_dump($request->parameters);
+        var_dump($request->getRequestVars());
         //$this->model = 
     }
     
@@ -32,7 +32,7 @@ class RegisterController extends Controller {
     {
         // for testing
         echo "PUT registering user".LINE_BREAK;
-        var_dump($request->parameters);
+        var_dump($request->getRequestVars());
         //$this->model = 
     }
 
@@ -40,7 +40,7 @@ class RegisterController extends Controller {
     {
         // for testing
         echo "DELETE registering user".LINE_BREAK;
-        var_dump($request->parameters);
+        var_dump($request->getRequestVars());
         //$this->model = 
     }
 

@@ -17,10 +17,12 @@ class ControllerRouter {
         // default controller name (in case no resourse has been specified
         $controller_name = DEFAULT_CONTROLLER;
         
+        $resource = $request->getResource();
+        
         // constract controller name from resource requested
-        if($request->url_elements) 
+        if( count($resource) ) 
         {
-          $controller_name = ucfirst($request->url_elements[1]) . 'Controller';
+          $controller_name = ucfirst($resource[1]) . 'Controller';
         }
         
         try 
@@ -32,7 +34,7 @@ class ControllerRouter {
           $response = $controller->$action_name($request);
         } 
         catch(Exception $e) {
-          $response = "Unknown Request for " . $request->url_elements[1];
+          $response = "Unknown Request for " . $resource[1];
           echo $e->getMessage(),LINE_BREAK;
         }
 
