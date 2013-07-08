@@ -12,43 +12,16 @@
  */
 class UserController extends Controller {
    
-    /*
-    public function GETAction($request)
-    {
-        // for testing
-        echo "GET registering user".LINE_BREAK;
-        var_dump($request->getRequestVars());
-        //$this->model = 
-    }
-     * 
-     */
 
     public function POSTAction(Request $request)
     {
-       
-        echo "POST registering user".LINE_BREAK;
-        var_dump($request->getRequestVars());
+        echo LINE_BREAK;
+        echo "POST " .implode("/",$request->getResource()).LINE_BREAK;
+        echo "registering user '" .$request->getRequestVars()['user']
+                ."' with password '".$request->getRequestVars()['pass']."'". LINE_BREAK;
+        //var_dump($request->getRequestVars());
         //$this->model = 
     }
-    
-    /*
-    public function PUTAction($request) 
-    {
-        // for testing
-        echo "PUT registering user".LINE_BREAK;
-        var_dump($request->getRequestVars());
-        //$this->model = 
-    }
-
-    public function DELETEAction($request) 
-    {
-        // for testing
-        echo "DELETE registering user".LINE_BREAK;
-        var_dump($request->getRequestVars());
-        //$this->model = 
-    }
-     * 
-     */
 
 }
 

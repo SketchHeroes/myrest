@@ -19,22 +19,52 @@ class Request {
 
 	public function __construct()
 	{
-		$this->request_vars		= array();
-		$this->data				= '';
-		$this->http_accept		= (strpos($_SERVER['HTTP_ACCEPT'], 'json')) ? 'json' : 'xml';
-		$this->method			= 'GET';
+		$this->request_vars	= array();
+		$this->data             = '';
+		$this->http_accept      = 'xml';
+		$this->method		= 'GET';
+                $this->resource         = array();
+	}
+        
+        public function init()
+        {
+		$this->data = '';
+		$this->method = 'GET';
+                
+                if(isset($_SERVER['HTTP_ACCEPT']))
+                {
+                    $this->http_accept = (strpos($_SERVER['HTTP_ACCEPT'], 'json')) ? 'json' : 'xml';
+                }
                 
 		if(isset($_SERVER['REDIRECT_URL'])) 
                 {
                     $this->resource = array_values(array_filter(explode('/', $_SERVER['REDIRECT_URL']), 'strlen'));
                 }
-                else
+                
+                // figure out the method 
+                // and if it's POST(or PUT) grab the incoming data
+                if(isset($_SERVER['REQUEST_METHOD'])) 
                 {
-                    $this->resource = array();
+                    $this->method =  $_SERVER['REQUEST_METHOD'];
+
+                    switch($this->method) {
+                      case 'GET':
+                        $this->request_vars = $_GET;
+                        break;
+                      case 'POST':
+                      case 'PUT':
+                        //$request->request_vars = file_get_contents('php://input');
+                        $this->request_vars = $_POST;
+                        break;
+                      case 'DELETE':
+                      default:
+                        // we won't set any parameters in these cases
+                    }
                 }
-	}
-	
-	public function setData($data)
+        }
+
+
+        public function setData($data)
 	{
 		$this->data = $data;
 	}
