@@ -23,9 +23,14 @@ class Request {
 		$this->data				= '';
 		$this->http_accept		= (strpos($_SERVER['HTTP_ACCEPT'], 'json')) ? 'json' : 'xml';
 		$this->method			= 'GET';
+                
 		if(isset($_SERVER['REDIRECT_URL'])) 
                 {
-                    $this->resource         = array_values(array_filter(explode('/', $_SERVER['REDIRECT_URL']), 'strlen'));
+                    $this->resource = array_values(array_filter(explode('/', $_SERVER['REDIRECT_URL']), 'strlen'));
+                }
+                else
+                {
+                    $this->resource = array();
                 }
 	}
 	

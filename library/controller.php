@@ -27,38 +27,30 @@ abstract class Controller {
           //$this->view = new $view_classname(); 
      }  
      
-     // dealing with unsupported HTTP request methods
+     // dealing with unsupported methods
      public function __call($name, $params) {
-       //error_log('Unknown HTTP method ' . $name );
-       echo 'Unknown HTTP request method'.LINE_BREAK;
-       return false;
+        // in case the function is HTTP method with a Request as the first
+        // parameter
+        if(isset($params[0]) && get_class($params[0]) === 'Request' )
+        {
+            $response = 'unsupported HTTP method '.$params[0]->getMethod() 
+                 .' for resource '.implode("/",$params[0]->getResource()).LINE_BREAK;
+        }
+        else 
+        {
+            $response = 'unsupported HTTP method '.LINE_BREAK;   
+        }   
+        return $response;
      }
 
-     /*
-     public function invoke()  
-     {  
-          if (!isset($_GET['book']))  
-          {  
-               // no special book is requested, we'll show a list of all available books  
-               $books = $this->model->getBookList();  
-               include 'view/booklist.php'; 
-          } 
-          else 
-          { 
-               // show the requested book 
-               $book = $this->model->getBook($_GET['book']); 
-               include 'view/viewbook.php';  
-          }  
-     }  
-      * 
-      */
-    abstract public function GETAction($request);
+     
+    //abstract public function GETAction($request);
 
-    abstract public function POSTAction($request);
+    //abstract public function POSTAction($request);
     
-    abstract public function PUTAction($request);
+    //abstract public function PUTAction($request);
 
-    abstract public function DELETEAction($request);  
+    //abstract public function DELETEAction($request);  
 
 }  
 

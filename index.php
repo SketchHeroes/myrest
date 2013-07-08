@@ -6,6 +6,10 @@ define('LINE_BREAK', '<br />');
 
 require_once (ROOT . DS . 'library' . DS . 'bootstrap.php');
 
+//echo $_SERVER['HTTP_ACCEPT'].LINE_BREAK;
+//echo $_SERVER['PATH_INFO'].LINE_BREAK;
+//echo $_SERVER['REDIRECT_URL'].LINE_BREAK;
+
 // creating Request object
 try {
     $request = new Request();

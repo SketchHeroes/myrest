@@ -10,8 +10,9 @@
  *
  * @author michael
  */
-class RegisterController extends Controller {
+class UserController extends Controller {
    
+    /*
     public function GETAction($request)
     {
         // for testing
@@ -19,8 +20,10 @@ class RegisterController extends Controller {
         var_dump($request->getRequestVars());
         //$this->model = 
     }
+     * 
+     */
 
-    public function POSTAction($request)
+    public function POSTAction(Request $request)
     {
        
         echo "POST registering user".LINE_BREAK;
@@ -28,6 +31,7 @@ class RegisterController extends Controller {
         //$this->model = 
     }
     
+    /*
     public function PUTAction($request) 
     {
         // for testing
@@ -43,6 +47,8 @@ class RegisterController extends Controller {
         var_dump($request->getRequestVars());
         //$this->model = 
     }
+     * 
+     */
 
 }
 
