@@ -21,7 +21,7 @@ class ControllerRouter {
         
         // check if the resource is not empty and alphanumeric
         // ( preventing \ resorce trying to instantiate abstract class Controller )
-        if( count($resource) && ctype_alnum($resource[1]) ) 
+        if( count($resource)>1 && ctype_alnum($resource[1]) ) 
         {
             // constract controller name from resource requested
             $controller_name = ucfirst($resource[1]) . 'Controller';
@@ -34,7 +34,8 @@ class ControllerRouter {
               $action_name = ucfirst($request->getMethod()) . "Action";
               $response = $controller->$action_name($request);
             } 
-            catch(Exception $e) {
+            catch(Exception $e) 
+            {
               $response = "unsupported resource " . $resource[1];
               echo $e->getMessage(),LINE_BREAK;
             }

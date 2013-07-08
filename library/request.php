@@ -11,57 +11,95 @@
  * @author michael
  */
 class Request {
-	private $request_vars;
+	private $parameters;
 	private $data;
 	private $http_accept;
+        private $format;
 	private $method;
 	private $resource;
+        private $query_str_params;
 
 	public function __construct()
 	{
-		$this->request_vars	= array();
+		$this->parameters	= array();
+                $this->query_str_params = array();
 		$this->data             = '';
-		$this->http_accept      = 'xml';
+		$this->http_accept      = 'json';
 		$this->method		= 'GET';
                 $this->resource         = array();
+                $this->format           = 'json';
 	}
         
         public function init()
         {
-		$this->data = '';
-		$this->method = 'GET';
-                
-                if(isset($_SERVER['HTTP_ACCEPT']))
+                // figure out the method 
+                $this->method =  $_SERVER['REQUEST_METHOD'];
+            
+                // get http_accept
+		if(isset($_SERVER['HTTP_ACCEPT']))
                 {
                     $this->http_accept = (strpos($_SERVER['HTTP_ACCEPT'], 'json')) ? 'json' : 'xml';
-                }
+                }                    
                 
+                // get resource
 		if(isset($_SERVER['REDIRECT_URL'])) 
                 {
                     $this->resource = array_values(array_filter(explode('/', $_SERVER['REDIRECT_URL']), 'strlen'));
                 }
                 
-                // figure out the method 
-                // and if it's POST(or PUT) grab the incoming data
-                if(isset($_SERVER['REQUEST_METHOD'])) 
+                // get the query_string params (used in GET method)
+                if (isset($_SERVER['QUERY_STRING'])) 
                 {
-                    $this->method =  $_SERVER['REQUEST_METHOD'];
-
-                    switch($this->method) {
-                      case 'GET':
-                        $this->request_vars = $_GET;
-                        break;
-                      case 'POST':
-                      case 'PUT':
-                        //$request->request_vars = file_get_contents('php://input');
-                        $this->request_vars = $_POST;
-                        break;
-                      case 'DELETE':
-                      default:
-                        // we won't set any parameters in these cases
+                    parse_str($_SERVER['QUERY_STRING'], $this->query_str_params);
+                    echo 'query string params:';
+                    var_dump($this->query_str_params);
+                    echo LINE_BREAK;
+                }
+                
+                // get parameters passed through the body of the http request
+                // with ( POST, PUT ) 
+                // DELETE ?
+                $this->data = file_get_contents("php://input");
+                echo "php://input: ".$this->data.LINE_BREAK;
+                   
+                // check if content type set 
+                if(isset($_SERVER['CONTENT_TYPE'])) 
+                {
+                    $content_type = $_SERVER['CONTENT_TYPE'];
+                    
+                    echo 'content type: '.$content_type.LINE_BREAK;
+           
+                    switch($content_type) 
+                    {
+                        // in case the request body is in json format
+                        case "application/json":
+                            $parameters = array();
+                            $this->parameters = json_decode($this->data,true);
+                            $this->format = "json";
+                            break;
+                        case "application/x-www-form-urlencoded":
+                            parse_str($this->data, $this->parameters);
+                            $this->format = "html";
+                            break;
+                        case "multipart/form-data":
+                            // to be continued...
+                            break;
+                        default:
+                            break;
                     }
                 }
+                else 
+                {
+                    // getting the parameters the default way
+                    $this->parameters = parse_str($this->data, $this->parameters);
+                    $this->format = "html";
+                }
+                
+                echo 'parameters:';
+                var_dump($this->parameters);
+                echo LINE_BREAK;
         }
+
 
 
         public function setData($data)
@@ -74,7 +112,7 @@ class Request {
 		$this->method = $method;
 	}
 
-	public function setRequestVars($request_vars)
+	public function setParameters($request_vars)
 	{
 		$this->request_vars = $request_vars;
 	}
@@ -94,9 +132,9 @@ class Request {
 		return $this->http_accept;
 	}
 
-	public function getRequestVars()
+	public function getParameters()
 	{
-		return $this->request_vars;
+		return $this->parameters;
 	}
 	
 	public function getResource()

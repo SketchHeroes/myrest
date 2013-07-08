@@ -4,7 +4,7 @@ require_once (ROOT . DS . 'config' . DS . 'config.php');
 //require_once (ROOT . DS . 'library' . DS . 'shared.php');
 
 function __autoload($classname) {
-    echo "Trying to include class ".$classname.LINE_BREAK;
+    //echo "Trying to include class ".$classname.LINE_BREAK;
     
     if (file_exists(ROOT . DS . 'library' . DS . strtolower($classname) . '.php')) {
             require_once(ROOT . DS . 'library' . DS . strtolower($classname) . '.php');
